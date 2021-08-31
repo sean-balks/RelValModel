@@ -19,6 +19,24 @@ for i in range(num_companies):
     companies.append(companyClass.Company(curr))
 print()
 
+#Find which statistics are available for all companies and inform user
+print("Here is a list of the available statistics: ")
+if(len(companies) > 0):
+    available_financials = set(companies[0].financials.index)
+    available_cashflow = set(companies[0].cashflow.index)
+    available_balancesheet = set(companies[0].balancesheet)
+    for company in companies:
+        available_financials = available_financials.intersection(company.financials.index)
+        available_cashflow = available_cashflow.intersection(company.cashflow.index)
+        available_balancesheet = available_balancesheet.intersection(company.balancesheet.index)
+    for item in available_financials:
+        print(item)
+    for item in available_cashflow:
+        print(item)
+    for item in available_balancesheet:
+        print(item)
+print()
+    
 #Gather input on stats
 num_stats = int(input("How many statistics would you like to view? \n"))
 for i in range(num_stats):
