@@ -53,7 +53,7 @@ for company in companies:
 
 #Size subplots
 if(len(stats) == 1):
-    fig, axs = plt.subplots(1, 2)
+    fig, axs = plt.subplots(1, 2, figsize=(6.7,8))
     for i in range(len(companies)):
         companies[i].generate_raw_dataframe(companies[i].raw_data, 'Year', stats[0])
         companies[i].generate_percent_dataframe(companies[i].percent_data, 'Year', stats[0])
@@ -61,9 +61,9 @@ if(len(stats) == 1):
         axs[1].plot(companies[i].percent_dataframes[0]['Year'], companies[i].percent_dataframes[0][stats[0]], color=color_set[companies[i].name], marker='o')
 
     axs[0].set_title(stats[0] + " (in millions)")
-    axs[0].legend(legend_names, loc="upper left")
+    axs[0].legend(legend_names, loc="upper left", prop={'size': 5})
     axs[1].set_title(stats[0] + " (%)")
-    axs[1].legend(legend_names, loc="upper left")
+    axs[1].legend(legend_names, loc="upper left", prop={'size': 5})
 
     axs[1].yaxis.set_major_locator(MaxNLocator(5))
     axs[1].yaxis.set_major_formatter(mtick.PercentFormatter(xmax=5))
@@ -72,7 +72,7 @@ if(len(stats) == 1):
     plt.setp(axs[1].get_xticklabels(), rotation=30, horizontalalignment='right')
 else:
 
-    fig, axs = plt.subplots(len(stats), 2)
+    fig, axs = plt.subplots(len(stats), 2, figsize=(6.7,8))
     for i in range(len(stats)):
         
         for j in range(len(companies)):
@@ -82,24 +82,22 @@ else:
             axs[i, 1].plot(companies[j].percent_dataframes[0]['Year'], companies[j].percent_dataframes[i][stats[i]], color=color_set[companies[j].name], marker='o')
         
         axs[i, 0].set_title(stats[i] + " (in millions)")
-        axs[i, 0].legend(legend_names, loc="upper left")
+        axs[i, 0].legend(legend_names, loc="upper left", prop={'size': 5})
         axs[i, 1].set_title(stats[i] + " (%)")
-        axs[i, 1].legend(legend_names, loc="upper left")
+        axs[i, 1].legend(legend_names, loc="upper left", prop={'size': 5})
 
         axs[i,1].yaxis.set_major_locator(MaxNLocator(5))
         axs[i,1].yaxis.set_major_formatter(mtick.PercentFormatter(xmax=5))
 
-        plt.setp(axs[i, 0].get_xticklabels(), rotation=30, horizontalalignment='right')
-        plt.setp(axs[i, 1].get_xticklabels(), rotation=30, horizontalalignment='right')
+        plt.setp(axs[i, 0].get_xticklabels(), rotation=50, horizontalalignment='right')
+        plt.setp(axs[i, 1].get_xticklabels(), rotation=50, horizontalalignment='right')
 
 
 plt.tight_layout()
-#a = windowClass.ScrollableWindow(plt)
-plt.show()
+if(num_stats > 1):
+    plt.subplots_adjust(top=0.945, bottom=0.13, left=0.105, right=0.975, hspace=0.87, wspace=0.305)
+else:
+    plt.subplots_adjust(top=0.945, bottom=0.615, left=0.1, right=0.99, hspace=0.87, wspace=0.305)
 
-
-#Future
-#% on Y axis
-# - 100 %, 0%, 100% or something like that 
-#Fix 0's on X axis
-#Basically make it aesthetic
+a = windowClass.ScrollableWindow(fig)
+#plt.show()
